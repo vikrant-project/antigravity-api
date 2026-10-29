@@ -41,3 +41,8 @@ token.json
 .DS_Store
 Thumbs.db
 .system_generated/
+
+# Proprietary local agent core
+corik/
+corik_audit_report.md
+hello_corik.txt
