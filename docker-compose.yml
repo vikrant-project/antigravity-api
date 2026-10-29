@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  antigravity-api:
+    build: .
+    container_name: antigravity-api
+    ports:
+      - "8000:8000"
+    environment:
+      - ANTIGRAVITY_ACCESS_TOKEN=${ANTIGRAVITY_ACCESS_TOKEN:-}
+      - ANTIGRAVITY_REFRESH_TOKEN=${ANTIGRAVITY_REFRESH_TOKEN:-}
+    volumes:
+      - ./token.json:/app/token.json:ro
+    restart: unless-stopped

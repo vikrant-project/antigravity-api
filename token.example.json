@@ -1,0 +1,9 @@
+{
+  "token": {
+    "access_token": "ya29.your_access_token_here",
+    "token_type": "Bearer",
+    "refresh_token": "1//your_refresh_token_here",
+    "expiry": "2026-12-31T23:59:59.000000Z"
+  },
+  "auth_method": "consumer"
+}

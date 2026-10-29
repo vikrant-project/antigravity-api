@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Antigravity Chatbot & Direct API</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="logo-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/>
+                        <path d="M2 12h20"/>
+                    </svg>
+                </div>
+                <div class="brand-text">
+                    <h2>Antigravity</h2>
+                    <span class="badge-direct">Direct Cloud API</span>
+                </div>
+            </div>
+
+            <div class="account-card" id="accountCard">
+                <div class="avatar" id="userAvatar">A</div>
+                <div class="account-info">
+                    <div class="user-name" id="userName">Checking Auth...</div>
+                    <div class="user-email" id="userEmail">Direct Cloud Mode</div>
+                </div>
+                <div class="status-indicator online" id="statusIndicator"></div>
+            </div>
+
+            <div class="sidebar-section">
+                <label class="section-label">System Persona</label>
+                <select id="personaSelect" class="styled-select">
+                    <option value="general">Default AI Assistant</option>
+                    <option value="coding">Master Software Engineer</option>
+                    <option value="security">Cybersecurity & Bug Bounty Auditor</option>
+                    <option value="architect">System & Cloud Architect</option>
+                </select>
+            </div>
+
+            <div class="sidebar-section">
+                <label class="section-label">Trending Capabilities</label>
+                <div class="tags-container">
+                    <button class="prompt-chip" data-prompt="Explain Gemini 3.8 Flash architecture, reasoning tiers, and how it was reverse engineered.">Gemini 3.8 Flash</button>
+                    <button class="prompt-chip" data-prompt="Write a complete secure fullstack authentication API in FastAPI with JWT.">Web API</button>
+                    <button class="prompt-chip" data-prompt="Perform a security audit checklist for OWASP Top 10 API vulnerabilities with verification PoCs.">Cybersecurity</button>
+                    <button class="prompt-chip" data-prompt="Design a scalable event-driven microservices architecture with Redis & WebSockets.">Architecture</button>
+                </div>
+            </div>
+
+            <div class="sidebar-section quota-box">
+                <div class="quota-header">
+                    <span>Active Quota</span>
+                    <span id="quotaPct">100%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="quotaBar" style="width: 100%;"></div>
+                </div>
+                <div class="quota-subtext" id="quotaDetails">Direct Google Backend</div>
+            </div>
+
+            <div class="sidebar-footer">
+                <button id="clearChatBtn" class="secondary-btn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18m-2 0v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6m3 0V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
+                    Clear Chat
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Chat Area -->
+        <main class="chat-main">
+            <!-- Top Navbar -->
+            <header class="chat-header">
+                <div class="model-picker-wrapper">
+                    <label for="modelSelect">Model:</label>
+                    <select id="modelSelect" class="model-dropdown">
+                        <option value="gemini-3.8-flash-high" selected>Gemini 3.8 Flash (High)</option>
+                        <option value="gemini-3.8-flash-medium">Gemini 3.8 Flash (Medium)</option>
+                        <option value="gemini-3.8-flash-low">Gemini 3.8 Flash (Low)</option>
+                        <option value="claude-sonnet-4-6">Claude Sonnet 4.6 (Thinking)</option>
+                        <option value="claude-opus-4-6-thinking">Claude Opus 4.6 (Thinking)</option>
+                        <option value="gemini-3-flash">Gemini 3 Flash</option>
+                        <option value="gemini-2.5-flash">Gemini 3.5 Flash Lite</option>
+                        <option value="gpt-oss-120b-medium">GPT-OSS 120B (Medium)</option>
+                        <option value="gemini-2.5-pro">Gemini 2.5 Pro</option>
+                    </select>
+                </div>
+                <div class="header-status">
+                    <span class="status-pill active">CLI-Free API</span>
+                    <span class="status-pill latency" id="latencyPill">Ready</span>
+                </div>
+            </header>
+
+            <!-- Messages List -->
+            <div class="messages-container" id="messagesContainer">
+                <div class="welcome-hero" id="welcomeHero">
+                    <div class="hero-icon">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                        </svg>
+                    </div>
+                    <h1>Antigravity Direct Chatbot</h1>
+                    <p>Direct Google Cloud Code backend connection. Powered by Gemini 3.8 Flash (High/Medium/Low), Claude Sonnet 4.6 Thinking, and GPT-OSS 120B.</p>
+                </div>
+            </div>
+
+            <!-- Input Bar -->
+            <div class="input-container">
+                <div class="input-card">
+                    <textarea 
+                        id="chatInput" 
+                        placeholder="Message Antigravity (Shift + Enter for new line)..." 
+                        rows="1"
+                    ></textarea>
+                    <div class="input-actions">
+                        <span class="key-hint">Enter to send</span>
+                        <button id="sendBtn" class="send-btn" title="Send message">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="22" y1="2" x2="11" y2="13"/>
+                                <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>
